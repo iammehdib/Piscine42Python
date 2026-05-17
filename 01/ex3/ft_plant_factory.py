@@ -13,16 +13,17 @@ class Plant:
     def show(self) -> None:
         print(f"{self.name}: {self.height}cm, {self.days} days old")
 
+
 if __name__ == "__main__":
-    dict_plants = [
-        ["Rose", 25.0, 30],
-        ["Oak", 200.0, 365],
-        ["Cactus", 5.0, 90],
-        ["Sunflower", 80.0, 45],
-        ["Fern", 15.0, 120],
+    dict_plants: list[tuple[str, float, int]] = [
+        ("Rose", 25.0, 30),
+        ("Oak", 200.0, 365),
+        ("Cactus", 5.0, 90),
+        ("Sunflower", 80.0, 45),
+        ("Fern", 15.0, 120),
     ]
     print("=== Plant Factory Output ===")
-    for plant in dict_plants:
-        plant = Plant(*plant)
+    for plant_tuple in dict_plants:
+        plant = Plant(*plant_tuple)
         print("Created: ", end="")
         plant.show()
