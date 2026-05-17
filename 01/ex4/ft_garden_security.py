@@ -10,7 +10,7 @@ class Plant:
         if age > 0.0:
             self._age = age
         else:
-            self._age = 0.0
+            self._age = 0
 
     def get_height(self) -> float:
         return self._height
@@ -29,13 +29,13 @@ class Plant:
     def set_age(self, age: float) -> None:
         if age < 0.0:
             print(f"{self.name}: Error, age can't be negative")
-            print(f"Age update rejected")
+            print("Age update rejected")
             return
         self._age = round(age)
         print(f"Age updated: {self._age} days")
 
     def grow(self) -> None:
-        self.height = round(self._height + 0.8, 1)
+        self._height = round(self._height + 0.8, 1)
 
     def age(self) -> None:
         self._age += 1
@@ -43,11 +43,13 @@ class Plant:
     def show(self) -> None:
         print(f"{self.name}: {self._height}cm, {self._age} days old")
 
+
 if __name__ == "__main__":
     rose_plant = Plant("Rose", 15.0, 10)
 
     print("=== Garden Security System ===")
-    print(f"Plant created: Rose: {rose_plant.get_height()}cm, {rose_plant.get_age()} days old")
+    print(f"Plant created: Rose: {rose_plant.get_height()}cm, "
+          f"{rose_plant.get_age()} days old")
     print(" ")
     rose_plant.set_height(25)
     rose_plant.set_age(30)
@@ -55,5 +57,5 @@ if __name__ == "__main__":
     rose_plant.set_height(-1)
     rose_plant.set_age(-1)
     print(" ")
-    print(f"Current state: ", end="")
+    print("Current state: ", end="")
     rose_plant.show()
