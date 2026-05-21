@@ -35,7 +35,7 @@ class Plant:
         print(f"Age updated: {self._age} days")
 
     def grow(self) -> None:
-        self._height = round(self._height + 0.8, 1)
+        self._height = round(self._height + 2.1, 1)
 
     def age(self) -> None:
         self._age += 1
@@ -93,9 +93,6 @@ class Vegetable(Plant):
         super().show()
         print(f"Harvest season: {self.harvest_season}")
         print(f"Nutritional value: {self.nutritional_value}")
-
-    def grow(self) -> None:
-        self._height = round(self._height + 2.1, 1)
 
     def age(self) -> None:
         super().age()
