@@ -1,4 +1,16 @@
 class Plant:
+
+    class Stats:
+        def __init__(self):
+            self.grow_count = 0
+            self.age_count = 0
+            self.show_count = 0
+
+        def show(self):
+            print(f"[statistics for {self.name}]")
+            print(f"""Stats: {self.grow_count} grow,
+                {self.age_count} age, {self.show_count} show""")
+
     def __init__(self, name: str, height: float, age: int) -> None:
         self.name = name
 
@@ -35,22 +47,23 @@ class Plant:
         print(f"Age updated: {self._age} days")
 
     def grow(self) -> None:
+        self.Stats.grow_count += 1
         self._height = round(self._height + 2.1, 1)
 
     def age(self) -> None:
+        self.Stats.age_count += 1
         self._age += 1
 
     def show(self) -> None:
+        self.Stats.show_count += 1
         print(f"{self.name}: {self._height}cm, {self._age} days old")
 
     @staticmethod
     def has_older_one_year(age: int) -> bool:
-        if age > 365:
-            return True
-        return False
+        return age > 365
 
     @classmethod
-    def anonymous(cls) -> "Plant":
+    def create_anonymous_plant(cls) -> "Plant":
         return cls("Unknown plan", 0.0, 0)
 
 
@@ -81,7 +94,16 @@ class Tree(Plant):
         super().__init__(name, height, age)
         self.trunk_diameter = trunk_diameter
 
+    class Stats:
+        def __init__(self):
+            self.shade_count = 0
+
+        def show(self):
+            super().show()
+            print(f"Seeds: {self.count_seeds}")
+
     def produce_shade(self) -> None:
+        self.Stats.shade_count += 0
         print(f"Tree {self.name} now produces a "
               f"shade of {self.get_height()}cm "
               f"long and {self.trunk_diameter}cm wide.")
@@ -110,15 +132,26 @@ class Vegetable(Plant):
 
 
 class Seed(Flower):
-    def __init__(self, name: str, height: float, age: int, color: str):
+    def __init__(self, name: str, height: float, age: int,
+                 color: str):
         super().__init__(name, height, age, color)
+
+    def produce_shade(self) -> None:
+        print(f"Tree {self.name} now produces a "
+              f"shade of {self.get_height()}cm "
+              f"long and {self.trunk_diameter}cm wide.")
 
 
 if __name__ == "__main__":
     print("=== Garden statistics ===")
     print("=== Check year-old")
+    print(f"Is 30 days more than a year? -> {Plant.has_older_one_year(30)}")
+    print(f"Is 400 days more than a year? -> {Plant.has_older_one_year(400)}")
+    print("")
+    print("=== Flower")
     rose = Flower("Rose", 15.0, 10, "red")
     rose.show()
+    rose.Stats.show()
     rose.bloom()
     rose.show()
 
@@ -126,7 +159,9 @@ if __name__ == "__main__":
     print("=== Tree")
     oak = Tree("Oak", 200.0, 365, 5.0)
     oak.show()
+    oak.get_stats()
     print("[asking the oak to produce shade]")
+    oak.get_stats()
     oak.produce_shade()
 
     print(" ")
@@ -140,50 +175,7 @@ if __name__ == "__main__":
         tomato.age()
     tomato.show()
 
-#=== Garden statistics ===
-#=== Check year-old
-#Is 30 days more than a year? -> False
-#Is 400 days more than a year? -> True
-#
-#=== Flower
-#Rose: 15.0cm, 10 days old
-#Color: red
-#Rose has not bloomed yet
-#[statistics for Rose]
-#Stats: 0 grow, 0 age, 1 show
-#[asking the rose to grow and bloom]
-#Rose: 23.0cm, 10 days old
-#Color: red
-#Rose is blooming beautifully!
-#[statistics for Rose]
-#Stats: 1 grow, 0 age, 2 show
-#
-#=== Tree
-#Oak: 200.0cm, 365 days old
-#Trunk diameter: 5.0cm
-#[statistics for Oak]
-#Stats: 0 grow, 0 age, 1 show
-#0 shade
-#[asking the oak to produce shade]
-#Tree Oak now produces a shade of 200.0cm long and 5.0cm wide.
-#[statistics for Oak]
-#Stats: 0 grow, 0 age, 1 show
-#1 shade
-#
-#=== Seed
-#Sunflower: 80.0cm, 45 days old
-#Color: yellow
-#Sunflower has not bloomed yet
-#Seeds: 0
-#[make sunflower grow, age and bloom]
-#Sunflower: 110.0cm, 65 days old
-#Color: yellow
-#Sunflower is blooming beautifully!
-#Seeds: 42
-#[statistics for Sunflower]
-#Stats: 1 grow, 1 age, 2 show
-#
-#=== Anonymous
-#Unknown plant: 0.0cm, 0 days old
-#[statistics for Unknown plant]
-#Stats: 0 grow, 0 age, 1 show
+    print("=== Anonymous")
+    anonymous = Plant.create_anonymous_plant()
+    anonymous.show()
+    anonymous.get_stats()
