@@ -21,10 +21,8 @@ def test_temperature():
                     f"Caught input_temperature error: {int_value}°C is "
                     f"too cold for plants (min 0°C)"
                 )
-        except ValueError:
-            print(
-                "Caught input_temperature error: invalid "
-                f"literal for int() with base 10: '{value}'")
+        except ValueError as e:
+            print(f"Caught input_temperature error: {e}")
         print()
 
     print("All tests completed - program didn't crash!")
