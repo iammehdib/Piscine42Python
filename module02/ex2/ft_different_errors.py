@@ -9,7 +9,7 @@ def garden_operations(operation_number: int) -> None:
         case 3:
             value = 'test' + 1
 
-def test_error_types():
+def test_error_types() -> None:
     print("=== Garden Error Types Demo ===")
     for operation in range(4):
         try:
