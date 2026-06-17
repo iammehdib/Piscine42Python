@@ -1,22 +1,50 @@
 import sys
 
-if __name__ == 'main':
-	print("=== Analyse du Système d'Inventaire ===")
-	inventory: dict[str, int] = {}
+if __name__ == '__main__':
+    print("=== Inventory System Analysis ===")
+    inventory: dict[str, int] = {}
 
-	index: int = 1
-	for arg in sys.argv[1:]:
-		item = arg.split(':')[0]
-		index = index + 1
+    for arg in sys.argv[1:]:
+        values = arg.split(':')
+        if len(values) == 2:
+            item = values[0]
+            quantity_str = values[1]
+            if item in inventory.keys():
+                print(f"Redundant item '{item}' - discarding")
+            else:
+                try:
+                    inventory[item] = int(quantity_str)
+                except ValueError as e:
+                    print(f"Quantity error for '{item}': {e}")
+        else:
+            print(f"Error - invalid parameter '{arg}'")
 
-		if item in sys.argv[index:]:
+    inventory_values = sum(inventory.values())
 
-		if len(item) != 2:
-			print("Error - invalid parameter 'hello')
+    print(f"Got inventory: {inventory}")
+    print(f"Item list: {list(inventory.keys())}")
+    print(f"Total quantity of the {len(inventory)} "
+          f"items: {inventory_values}")
 
-# Redundant item 'sword' - discardin
-# Error - invalid parameter 'hello'
-# Quantity error for 'key': invalid literal for int() with base 10: 'value'
-# Got inventory: {'sword': 1, 'potion': 5, 'shield': 2, 'armor': 3, 'helmet': 1}
-# Item list: ['sword', 'potion', 'shield', 'armor', 'helmet']
-# Total quantity of the 5 items: 12
+    for item, quantity in inventory.items():
+        percentage = round((quantity / inventory_values) * 100, 1)
+        print(f"Item {item} represents {percentage}%")
+
+    if inventory:
+        items = list(inventory.items())
+        max_item, max_quantity = items[0]
+        min_item, min_quantity = items[0]
+
+        for item, quantity in items[1:]:
+            if quantity > max_quantity:
+                max_item, max_quantity = item, quantity
+            if quantity < min_quantity:
+                min_item, min_quantity = item, quantity
+
+        print(f"Item most abundant: {max_item} with quantity {max_quantity}")
+        print(f"Item least abundant: {min_item} with quantity {min_quantity}")
+    else:
+        print("No items to analyze: inventory is empty!")
+
+    inventory.update({"magic_item": 1})
+    print(f"Updated inventory: {inventory}")
