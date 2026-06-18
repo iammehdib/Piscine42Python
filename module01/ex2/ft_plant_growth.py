@@ -15,7 +15,7 @@ class Plant:
 
 
 if __name__ == "__main__":
-    rose = Plant("Rose", 25, 30)
+    rose = Plant("Rose", 25.0, 30)
     start_grow = rose.height
 
     print("=== Garden Plant Growth ===")
