@@ -53,16 +53,16 @@ class Flower(Plant):
         self._has_bloom = False
 
     def bloom(self) -> None:
-        print("[asking the rose to bloom]")
+        print(f"[asking the {self.name.lower()} to bloom]")
         self._has_bloom = True
 
     def show(self) -> None:
         super().show()
         print(f"Color: {self.color}")
         if self._has_bloom:
-            print("Rose is blooming beautifully!")
+            print(f"{self.name} is blooming beautifully!")
         else:
-            print("Rose has not bloomed yet")
+            print(f"{self.name} has not bloomed yet")
 
 
 class Tree(Plant):
