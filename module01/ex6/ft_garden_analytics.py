@@ -200,7 +200,7 @@ if __name__ == "__main__":
     print("=== Seed")
     sunflower = Seed("Sunflower", 80.0, 45, "yellow")
     sunflower.show()
-    print("[make sunflower grow, day and bloom]")
+    print("[make sunflower grow, age and bloom]")
     sunflower.grow()
     sunflower.age()
     sunflower.bloom()
