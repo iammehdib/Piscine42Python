@@ -3,11 +3,12 @@ def garden_operations(operation_number: int) -> None:
         case 0:
             int('abc')
         case 1:
-            value = 0 / 0
+            0 / 0
         case 2:
-            file = open('/non/existent/file', 'r')
+            open('/non/existent/file', 'r')
         case 3:
-            value = 'test' + 1
+            'test' + 1
+
 
 def test_error_types() -> None:
     print("=== Garden Error Types Demo ===")
@@ -27,6 +28,7 @@ def test_error_types() -> None:
     print('Operation completed successfully')
     print()
     print('All error types tested successfully!')
+
 
 if __name__ == '__main__':
     test_error_types()
