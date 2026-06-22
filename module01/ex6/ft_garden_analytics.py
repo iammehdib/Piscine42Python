@@ -148,7 +148,7 @@ class Seed(Flower):
             self._seed_count = 0
 
     def __init__(self, name: str, height: float, days: int,
-                 color: str):
+                 color: str) -> None:
         super().__init__(name, height, days, color)
         self._stats: "Seed.Stats" = self.Stats(self)
 
