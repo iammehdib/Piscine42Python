@@ -26,23 +26,28 @@ if __name__ == '__main__':
     print(f"Total quantity of the {len(inventory)} "
           f"items: {inventory_values}")
 
-    for item, quantity in inventory.items():
-        percentage = round((quantity / inventory_values) * 100, 1)
+    for item in inventory.keys():
+        if inventory_values > 0:
+            percentage = round((inventory[item] / inventory_values) * 100, 1)
+        else:
+            percentage = 0.0
         print(f"Item {item} represents {percentage}%")
 
     if inventory:
-        items = list(inventory.items())
-        max_item, max_quantity = items[0]
-        min_item, min_quantity = items[0]
+        item_names = list(inventory.keys())
+        max_item = item_names[0]
+        min_item = item_names[0]
 
-        for item, quantity in items[1:]:
-            if quantity > max_quantity:
-                max_item, max_quantity = item, quantity
-            if quantity < min_quantity:
-                min_item, min_quantity = item, quantity
+        for item in item_names[1:]:
+            if inventory[item] > inventory[max_item]:
+                max_item = item
+            if inventory[item] < inventory[min_item]:
+                min_item = item
 
-        print(f"Item most abundant: {max_item} with quantity {max_quantity}")
-        print(f"Item least abundant: {min_item} with quantity {min_quantity}")
+        print(f"Item most abundant: {max_item} "
+              f"with quantity {inventory[max_item]}")
+        print(f"Item least abundant: {min_item} "
+              f"with quantity {inventory[min_item]}")
     else:
         print("No items to analyze: inventory is empty!")
 
