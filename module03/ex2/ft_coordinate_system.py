@@ -1,19 +1,20 @@
 import math
 
+
 def get_player_pos() -> tuple[float, float, float]:
     while True:
         raw = input("Enter new coordinates as "
                     "floats in format 'x,y,z': ")
         loc_parts = raw.split(',')
 
-        if len(loc_parts) != 3:
+        try:
+            x_str, y_str, z_str = loc_parts
+        except ValueError:
             print('Invalid syntax')
             continue
 
         try:
-            return (float(loc_parts[0]),
-                    float(loc_parts[1]),
-                    float(loc_parts[2]))
+            return (float(x_str), float(y_str), float(z_str))
         except ValueError:
             for part in loc_parts:
                 try:
@@ -37,7 +38,7 @@ if __name__ == '__main__':
                   + (0 - first_loc[2]) ** 2), 4)
     print(f'Distance to center: {dist_from_center}')
     print()
-    print(f'Get a second set of coordinates')
+    print('Get a second set of coordinates')
     second_loc = get_player_pos()
     dist_from_second_loc = round(
         math.sqrt((second_loc[0] - first_loc[0]) ** 2
