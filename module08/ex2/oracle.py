@@ -5,14 +5,14 @@ from dotenv import load_dotenv
 ENV_PATH = os.path.join(os.path.dirname(__file__), '.env')
 
 
-def verif(key: str, default_value: str, strict: bool = False) -> str:
+def verif(key: str, is_strict: bool = False) -> str:
     value = os.getenv(key)
     if value is None:
-        if strict:
+        if is_strict:
             print(f'ERROR: {key} required in production')
         else:
             print(f'WARNING: {key} not configured - using default')
-        return default_value
+        return "NOT SET"
     return value
 
 
@@ -22,16 +22,18 @@ if __name__ == '__main__':
     print()
     print('Configuration loaded:')
 
-    mode = verif('MATRIX_MODE', 'development')
+    mode = verif('MATRIX_MODE')
+    if mode == 'NOT SET':
+        mode = 'development'
     if mode not in ('development', 'production'):
         print(f"WARNING: Unknown mode '{mode}', defaulting to development")
         mode = 'development'
     strict = mode == 'production'
 
-    db_url = verif('DATABASE_URL', 'NOT SET', strict)
-    api_key = verif('API_KEY', 'NOT SET', strict)
-    log_level = verif('LOG_LEVEL', 'NOT SET', strict)
-    zion = verif('ZION_ENDPOINT', 'NOT SET', strict)
+    db_url = verif('DATABASE_URL', strict)
+    api_key = verif('API_KEY', strict)
+    log_level = verif('LOG_LEVEL', strict)
+    zion = verif('ZION_ENDPOINT', strict)
 
     print(f'Mode: {mode}')
     if db_url != 'NOT SET':
