@@ -1,36 +1,46 @@
 from ex1 import HealingCreatureFactory, TransformCreatureFactory
 
-print("Testing Creature with healing capability")
-healing = HealingCreatureFactory()
 
-print(" base:")
-sprout = healing.create_base()
-print(sprout.describe())
-print(sprout.attack())
-print(sprout.heal())
+def test_healing(factory: HealingCreatureFactory) -> None:
+    print("Testing Creature with healing capability")
 
-print(" evolved:")
-bloom = healing.create_evolved()
-print(bloom.describe())
-print(bloom.attack())
-print(bloom.heal())
+    print(" base:")
+    base = factory.create_base()
+    print(base.describe())
+    print(base.attack())
+    print(base.heal())
 
-print("")
-print("Testing Creature with transform capability")
-transform = TransformCreatureFactory()
+    print(" evolved:")
+    evolved = factory.create_evolved()
+    print(evolved.describe())
+    print(evolved.attack())
+    print(evolved.heal())
 
-print(" base:")
-shift = transform.create_base()
-print(shift.describe())
-print(shift.attack())
-print(shift.transform())
-print(shift.attack())
-print(shift.revert())
 
-print(" evolved:")
-morph = transform.create_evolved()
-print(morph.describe())
-print(morph.attack())
-print(morph.transform())
-print(morph.attack())
-print(morph.revert())
+def test_transform(factory: TransformCreatureFactory) -> None:
+    print("Testing Creature with transform capability")
+
+    print(" base:")
+    base = factory.create_base()
+    print(base.describe())
+    print(base.attack())
+    print(base.transform())
+    print(base.attack())
+    print(base.revert())
+
+    print(" evolved:")
+    evolved = factory.create_evolved()
+    print(evolved.describe())
+    print(evolved.attack())
+    print(evolved.transform())
+    print(evolved.attack())
+    print(evolved.revert())
+
+
+if __name__ == "__main__":
+    try:
+        test_healing(HealingCreatureFactory())
+        print()
+        test_transform(TransformCreatureFactory())
+    except Exception as error:
+        print(f"Error: {error}")
