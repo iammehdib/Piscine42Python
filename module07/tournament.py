@@ -1,5 +1,6 @@
-from ex0 import FlameFactory, AquaFactory
-from ex0.creatures import CreatureFactory
+from typing import TypeAlias
+
+from ex0 import FlameFactory, AquaFactory, CreatureFactory
 from ex1 import HealingCreatureFactory, TransformCreatureFactory
 from ex2 import (
     BattleStrategy, NormalStrategy,
@@ -7,10 +8,10 @@ from ex2 import (
     InvalidStrategyError
 )
 
-opp_tuple = tuple[CreatureFactory, BattleStrategy]
+Opponent: TypeAlias = tuple[CreatureFactory, BattleStrategy]
 
 
-def battle(opponents: list[opp_tuple]) -> None:
+def battle(opponents: list[Opponent]) -> None:
     print("*** Tournament ***")
     print(f"{len(opponents)} opponents involved")
     try:
@@ -20,7 +21,7 @@ def battle(opponents: list[opp_tuple]) -> None:
                 factory_b, strategy_b = opponents[j]
                 creature_a = factory_a.create_base()
                 creature_b = factory_b.create_base()
-                print("")
+                print()
                 print("* Battle *")
                 print(creature_a.describe())
                 print(" vs.")
@@ -32,31 +33,35 @@ def battle(opponents: list[opp_tuple]) -> None:
         print(f"Battle error, aborting tournament: {e}")
 
 
-normal = NormalStrategy()
-aggressive = AggressiveStrategy()
-defensive = DefensiveStrategy()
+if __name__ == "__main__":
+    try:
+        normal = NormalStrategy()
+        aggressive = AggressiveStrategy()
+        defensive = DefensiveStrategy()
 
-print("Tournament 0 (basic)")
-print(" [ (Flameling+Normal), (Healing+Defensive) ]")
-battle([
-    (FlameFactory(), normal),
-    (HealingCreatureFactory(), defensive),
-])
+        print("Tournament 0 (basic)")
+        print(" [ (Flameling+Normal), (Healing+Defensive) ]")
+        battle([
+            (FlameFactory(), normal),
+            (HealingCreatureFactory(), defensive),
+        ])
 
-print("")
-print("Tournament 1 (error)")
-print(" [ (Flameling+Aggressive), (Healing+Defensive) ]")
-battle([
-    (FlameFactory(), aggressive),
-    (HealingCreatureFactory(), defensive),
-])
+        print()
+        print("Tournament 1 (error)")
+        print(" [ (Flameling+Aggressive), (Healing+Defensive) ]")
+        battle([
+            (FlameFactory(), aggressive),
+            (HealingCreatureFactory(), defensive),
+        ])
 
-print("")
-print("Tournament 2 (multiple)")
-print(" [ (Aquabub+Normal), (Healing+Defensive), "
-      "(Transform+Aggressive) ]")
-battle([
-    (AquaFactory(), normal),
-    (HealingCreatureFactory(), defensive),
-    (TransformCreatureFactory(), aggressive),
-])
+        print()
+        print("Tournament 2 (multiple)")
+        print(" [ (Aquabub+Normal), (Healing+Defensive), "
+              "(Transform+Aggressive) ]")
+        battle([
+            (AquaFactory(), normal),
+            (HealingCreatureFactory(), defensive),
+            (TransformCreatureFactory(), aggressive),
+        ])
+    except Exception as error:
+        print(f"Error: {error}")
