@@ -5,6 +5,8 @@ from typing import Any
 
 
 def spell_reducer(spells: list[int], operation: str) -> int:
+    if not spells:
+        return 0
     operators: dict[str, Callable[[int, int], int]] = {
         "add": operator.add,
         "multiply": operator.mul,
@@ -21,9 +23,12 @@ def partial_enchanter(
     base_enchantment: Callable[..., str]
 ) -> dict[str, Callable[..., str]]:
     return {
-        "fire": functools.partial(base_enchantment, element="fire"),
-        "ice": functools.partial(base_enchantment, element="ice"),
-        "lightning": functools.partial(base_enchantment, element="lightning")
+        "fire": functools.partial(
+            base_enchantment, power=50, element="fire"),
+        "ice": functools.partial(
+            base_enchantment, power=50, element="ice"),
+        "lightning": functools.partial(
+            base_enchantment, power=50, element="lightning")
     }
 
 
@@ -65,8 +70,10 @@ if __name__ == "__main__":
     print(spell_reducer([15, 42, 8], "max"))
     print("Testing partial enchanter...")
     enchanters = partial_enchanter(enchant)
-    print(enchanters["fire"](power=50, target="Sword"))
-    print(enchanters["ice"](power=30, target="Shield"))
+    print(enchanters["fire"](target="Sword"))
+    print(enchanters["ice"](target="Shield"))
+    print(enchanters["lightning"](target="Spear"))
+    print(f"Empty spells: {spell_reducer([], 'add')}")
     print("Testing memoized fibonacci...")
     print([memoized_fibonacci(n) for n in range(10)])
     print(f"fib(50) = {memoized_fibonacci(50)}")
