@@ -1,4 +1,5 @@
-import functools, operator
+import functools
+import operator
 from collections.abc import Callable
 from typing import Any
 
